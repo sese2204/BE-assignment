@@ -1,6 +1,0 @@
-# Local developer overrides — DO NOT COMMIT THIS FILE
-# Activate with: SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
-#             or: ./gradlew bootRun --args='--spring.profiles.active=local'
-
-ai:
-  api-key: "YOUR_GEMINI_API_KEY_HERE"
