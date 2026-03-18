@@ -27,7 +27,7 @@ class AiApiClient(
     @Retryable(
         retryFor = [WebClientRequestException::class, WebClientResponseException::class],
         noRetryFor = [BusinessException::class],
-        maxAttemptsExpression = "#{@aiProperties.maxRetries}",
+        maxAttemptsExpression = "\${ai.max-retries:3}",
         backoff = Backoff(delay = 1000L, multiplier = 2.0),
     )
     fun chat(userMessage: String): String {
