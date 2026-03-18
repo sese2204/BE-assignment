@@ -38,3 +38,10 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### speckit ###
+.claude/
+.specify/
+specs/
+
+### Local secrets ###
