@@ -1,7 +1,5 @@
-package org.example.beassignment.chat.dto
+package org.example.beassignment.dto
 
-// Gemini API request format:
-// POST /v1beta/models/{model}:generateContent
 data class GeminiChatRequest(
     val contents: List<GeminiContent>,
     val systemInstruction: GeminiSystemInstruction? = null,

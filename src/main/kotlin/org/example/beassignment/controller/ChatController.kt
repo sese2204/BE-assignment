@@ -1,4 +1,4 @@
-package org.example.beassignment.chat.controller
+package org.example.beassignment.controller
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -6,10 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse as SwaggerApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
-import org.example.beassignment.chat.dto.ChatRequest
-import org.example.beassignment.chat.dto.ChatResponse
-import org.example.beassignment.chat.service.ChatService
 import org.example.beassignment.common.ApiResponse
+import org.example.beassignment.dto.ChatRequest
+import org.example.beassignment.dto.ChatResponse
+import org.example.beassignment.service.ChatService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
