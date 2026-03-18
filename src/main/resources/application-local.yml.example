@@ -1,0 +1,5 @@
+# Copy this file to application-local.yml and fill in your API key.
+# Run with: SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
+
+ai:
+  api-key: "YOUR_GEMINI_API_KEY_HERE"
