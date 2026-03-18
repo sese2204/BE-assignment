@@ -1,13 +1,13 @@
-package org.example.beassignment.chat.client
+package org.example.beassignment.client
 
-import org.example.beassignment.chat.dto.GeminiChatRequest
-import org.example.beassignment.chat.dto.GeminiChatResponse
-import org.example.beassignment.chat.dto.GeminiContent
-import org.example.beassignment.chat.dto.GeminiPart
-import org.example.beassignment.chat.dto.GeminiSystemInstruction
 import org.example.beassignment.common.BusinessException
 import org.example.beassignment.common.ErrorCode
 import org.example.beassignment.config.AiProperties
+import org.example.beassignment.dto.GeminiChatRequest
+import org.example.beassignment.dto.GeminiChatResponse
+import org.example.beassignment.dto.GeminiContent
+import org.example.beassignment.dto.GeminiPart
+import org.example.beassignment.dto.GeminiSystemInstruction
 import org.slf4j.LoggerFactory
 import org.springframework.retry.annotation.Backoff
 import org.springframework.retry.annotation.Recover

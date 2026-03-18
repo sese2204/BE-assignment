@@ -1,8 +1,8 @@
-package org.example.beassignment.chat.service
+package org.example.beassignment.service
 
-import org.example.beassignment.chat.client.AiApiClient
-import org.example.beassignment.chat.dto.ChatRequest
-import org.example.beassignment.chat.dto.ChatResponse
+import org.example.beassignment.client.AiApiClient
+import org.example.beassignment.dto.ChatRequest
+import org.example.beassignment.dto.ChatResponse
 import org.springframework.stereotype.Service
 
 @Service

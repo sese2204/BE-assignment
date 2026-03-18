@@ -1,6 +1,5 @@
-package org.example.beassignment.chat.dto
+package org.example.beassignment.dto
 
-// Gemini API response format
 data class GeminiChatResponse(
     val candidates: List<GeminiCandidate>,
 )
