@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:15.8
+    container_name: be-assignment-db
+    environment:
+      POSTGRES_DB: beassignment
+      POSTGRES_USER: beuser
+      POSTGRES_PASSWORD: bepassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U beuser -d beassignment"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:

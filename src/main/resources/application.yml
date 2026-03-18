@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: BE-assignment
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/beassignment}
+    username: ${SPRING_DATASOURCE_USERNAME:beuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:bepassword}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+
+ai:
+  api-key: ${AI_API_KEY:default_dummy_key}
+  base-url: ${AI_BASE_URL:https://generativelanguage.googleapis.com}
+  model-name: ${AI_MODEL_NAME:gemini-flash-latest}
+  system-prompt: ${AI_SYSTEM_PROMPT:You are a helpful assistant.}
+  connect-timeout-ms: ${AI_CONNECT_TIMEOUT_MS:5000}
+  read-timeout-ms: ${AI_READ_TIMEOUT_MS:60000}
+  max-retries: ${AI_MAX_RETRIES:3}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
