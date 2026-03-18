@@ -1,10 +1,8 @@
 package org.example.beassignment.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.stereotype.Component
 import org.springframework.validation.annotation.Validated
 
-@Component
 @Validated
 @ConfigurationProperties(prefix = "ai")
 data class AiProperties(
