@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class ChatService(
     private val aiApiClient: AiApiClient,
 ) {
-    fun chat(request: ChatRequest): ChatResponse {
+    suspend fun chat(request: ChatRequest): ChatResponse {
         val reply = aiApiClient.chat(request.message)
         return ChatResponse(reply = reply)
     }

@@ -36,7 +36,7 @@ class ChatController(
         ],
     )
     @PostMapping("/chat")
-    fun chat(@Valid @RequestBody request: ChatRequest): ResponseEntity<ApiResponse<ChatResponse>> {
+    suspend fun chat(@Valid @RequestBody request: ChatRequest): ResponseEntity<ApiResponse<ChatResponse>> {
         val result = chatService.chat(request)
         return ResponseEntity.ok(ApiResponse.ok(result))
     }
