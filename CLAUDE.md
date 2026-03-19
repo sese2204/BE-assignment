@@ -1,8 +1,10 @@
 # BE-assignment Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2026-03-18
+Auto-generated from all feature plans. Last updated: 2026-03-19
 
 ## Active Technologies
+- Kotlin 1.9.25 on JVM 21 + Spring Boot 3.5.11 (Web MVC, Data JPA, Security), Spring WebFlux (002-user-auth-chat)
+- PostgreSQL 15.8 (local via Docker Compose) (002-user-auth-chat)
 
 - Kotlin 1.9.25 on JVM 21 + Spring Boot 3.5.11, Spring Web MVC, Spring Data JPA, Spring WebFlux (001-ai-boilerplate)
 
@@ -43,6 +45,7 @@ AI_API_KEY=sk-... ./gradlew bootRun
 - Conversation with user: **Korean** | Specification/code documents: **English**
 
 ## Recent Changes
+- 002-user-auth-chat: Added Kotlin 1.9.25 on JVM 21 + Spring Boot 3.5.11 (Web MVC, Data JPA, Security), Spring WebFlux
 
 - 001-ai-boilerplate: Added Kotlin 1.9.25 on JVM 21 + Spring Boot 3.5.11, Spring Web MVC, Spring Data JPA, Spring WebFlux
 
