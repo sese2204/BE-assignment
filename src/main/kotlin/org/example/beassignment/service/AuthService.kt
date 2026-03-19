@@ -7,7 +7,10 @@ import org.example.beassignment.dto.LoginRequest
 import org.example.beassignment.dto.LoginResponse
 import org.example.beassignment.dto.SignupRequest
 import org.example.beassignment.dto.SignupResponse
+import org.example.beassignment.entity.ActivityLog
+import org.example.beassignment.entity.EventType
 import org.example.beassignment.entity.User
+import org.example.beassignment.repository.ActivityLogRepository
 import org.example.beassignment.repository.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -19,6 +22,7 @@ class AuthService(
     private val passwordEncoder: PasswordEncoder,
     private val jwtService: JwtService,
     private val jwtProperties: JwtProperties,
+    private val activityLogRepository: ActivityLogRepository,
 ) {
     @Transactional
     fun signup(request: SignupRequest): SignupResponse {
@@ -30,19 +34,21 @@ class AuthService(
                 email = request.email,
                 passwordHash = passwordEncoder.encode(request.password),
                 name = request.name,
-                role = request.role,
+                role = request.role.name,
             ),
         )
+        activityLogRepository.save(ActivityLog(user = user, eventType = EventType.SIGNUP))
         return SignupResponse(userId = user.id)
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     fun login(request: LoginRequest): LoginResponse {
         val user = userRepository.findByEmail(request.email)
             ?: throw BusinessException(ErrorCode.INVALID_CREDENTIALS)
         if (!passwordEncoder.matches(request.password, user.passwordHash)) {
             throw BusinessException(ErrorCode.INVALID_CREDENTIALS)
         }
+        activityLogRepository.save(ActivityLog(user = user, eventType = EventType.LOGIN))
         val token = jwtService.generateToken(user.id, user.role)
         return LoginResponse(token = token, expiresIn = jwtProperties.expiryMs / 1000)
     }

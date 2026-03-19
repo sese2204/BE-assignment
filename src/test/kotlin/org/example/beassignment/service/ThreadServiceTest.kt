@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.example.beassignment.entity.Chat
 import org.example.beassignment.entity.Thread
 import org.example.beassignment.entity.User
+import org.example.beassignment.repository.ActivityLogRepository
 import org.example.beassignment.repository.ChatRepository
 import org.example.beassignment.repository.ThreadRepository
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -17,7 +18,8 @@ class ThreadServiceTest {
 
     private val threadRepository = mockk<ThreadRepository>()
     private val chatRepository = mockk<ChatRepository>()
-    private val threadService = ThreadService(threadRepository, chatRepository)
+    private val activityLogRepository = mockk<ActivityLogRepository>()
+    private val threadService = ThreadService(threadRepository, chatRepository, activityLogRepository)
 
     private val user = User(id = 1L, email = "test@test.com", passwordHash = "h", name = "Test")
 
@@ -27,6 +29,7 @@ class ThreadServiceTest {
 
         every { chatRepository.findTopByThreadUserIdOrderByCreatedAtDesc(1L) } returns null
         every { threadRepository.save(any()) } returns newThread
+        every { activityLogRepository.save(any()) } returns mockk()
 
         val result = threadService.resolveActiveThread(user)
 
@@ -67,6 +70,7 @@ class ThreadServiceTest {
 
         every { chatRepository.findTopByThreadUserIdOrderByCreatedAtDesc(1L) } returns oldChat
         every { threadRepository.save(any()) } returns newThread
+        every { activityLogRepository.save(any()) } returns mockk()
 
         val result = threadService.resolveActiveThread(user)
 
