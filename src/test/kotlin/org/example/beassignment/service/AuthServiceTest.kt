@@ -7,8 +7,11 @@ import org.example.beassignment.common.BusinessException
 import org.example.beassignment.common.ErrorCode
 import org.example.beassignment.config.JwtProperties
 import org.example.beassignment.dto.LoginRequest
+import org.example.beassignment.dto.RoleType
 import org.example.beassignment.dto.SignupRequest
+import org.example.beassignment.entity.ActivityLog
 import org.example.beassignment.entity.User
+import org.example.beassignment.repository.ActivityLogRepository
 import org.example.beassignment.repository.UserRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -23,8 +26,9 @@ class AuthServiceTest {
     private val passwordEncoder = mockk<PasswordEncoder>()
     private val jwtService = mockk<JwtService>()
     private val jwtProperties = JwtProperties(secret = "unused", expiryMs = 3600000)
+    private val activityLogRepository = mockk<ActivityLogRepository>()
 
-    private val authService = AuthService(userRepository, passwordEncoder, jwtService, jwtProperties)
+    private val authService = AuthService(userRepository, passwordEncoder, jwtService, jwtProperties, activityLogRepository)
 
     @Test
     fun `signup succeeds with valid request`() {
@@ -35,6 +39,7 @@ class AuthServiceTest {
         every { userRepository.save(any()) } returns User(
             id = 1L, email = "test@test.com", passwordHash = "hashed", name = "Test",
         )
+        every { activityLogRepository.save(any()) } returns mockk()
 
         val result = authService.signup(request)
 
@@ -44,13 +49,14 @@ class AuthServiceTest {
 
     @Test
     fun `signup with admin role`() {
-        val request = SignupRequest(email = "admin@test.com", password = "password123", name = "Admin", role = "admin")
+        val request = SignupRequest(email = "admin@test.com", password = "password123", name = "Admin", role = RoleType.admin)
 
         every { userRepository.existsByEmail("admin@test.com") } returns false
         every { passwordEncoder.encode("password123") } returns "hashed"
         every { userRepository.save(match { it.role == "admin" }) } returns User(
             id = 2L, email = "admin@test.com", passwordHash = "hashed", name = "Admin", role = "admin",
         )
+        every { activityLogRepository.save(any()) } returns mockk()
 
         val result = authService.signup(request)
 
@@ -76,6 +82,7 @@ class AuthServiceTest {
         every { userRepository.findByEmail("test@test.com") } returns user
         every { passwordEncoder.matches("password123", "hashed") } returns true
         every { jwtService.generateToken(1L, "member") } returns "jwt-token"
+        every { activityLogRepository.save(any()) } returns mockk()
 
         val result = authService.login(request)
 
