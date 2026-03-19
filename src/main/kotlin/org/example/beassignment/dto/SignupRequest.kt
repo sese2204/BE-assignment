@@ -3,8 +3,13 @@ package org.example.beassignment.dto
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Pattern
+import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
+
+enum class RoleType {
+    member,
+    admin,
+}
 
 data class SignupRequest(
     @field:Email(message = "올바른 이메일 형식이어야 합니다")
@@ -18,7 +23,7 @@ data class SignupRequest(
     @field:NotBlank(message = "이름은 필수입니다")
     val name: String,
 
-    @Schema(description = "역할 (member 또는 admin). admin은 프로덕션 배포 시 제거 필요", example = "member")
-    @field:Pattern(regexp = "member|admin", message = "역할은 member 또는 admin만 허용됩니다")
-    val role: String = "member",
+    @Schema(description = "역할 선택 (member: 일반 사용자, admin: 관리자)", example = "member")
+    @field:NotNull
+    val role: RoleType = RoleType.member,
 )
