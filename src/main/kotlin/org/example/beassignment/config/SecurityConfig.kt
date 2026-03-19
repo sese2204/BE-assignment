@@ -1,8 +1,8 @@
 package org.example.beassignment.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.example.beassignment.auth.filter.JwtAuthFilter
-import org.example.beassignment.auth.service.JwtService
+import org.example.beassignment.filter.JwtAuthFilter
+import org.example.beassignment.service.JwtService
 import org.example.beassignment.common.ApiResponse
 import org.example.beassignment.common.ErrorCode
 import org.springframework.context.annotation.Bean

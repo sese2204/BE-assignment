@@ -5,12 +5,12 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
-import org.example.beassignment.auth.service.JwtClaims
-import org.example.beassignment.chat.dto.ThreadHistoryPageResponse
-import org.example.beassignment.chat.service.ChatService
 import org.example.beassignment.common.ApiResponse
 import org.example.beassignment.dto.ChatRequest
 import org.example.beassignment.dto.ChatResponse
+import org.example.beassignment.dto.ThreadHistoryPageResponse
+import org.example.beassignment.service.ChatService
+import org.example.beassignment.service.JwtClaims
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/chat")
 class ChatController(
-    @org.springframework.beans.factory.annotation.Qualifier("chatServiceV2")
     private val chatService: ChatService,
 ) {
     @Operation(summary = "AI 채팅 메시지 전송", description = "질문을 전송하고 AI 응답을 받습니다.")
