@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import java.time.Instant
 
 interface ThreadRepository : JpaRepository<Thread, Long> {
 
@@ -19,4 +20,7 @@ interface ThreadRepository : JpaRepository<Thread, Long> {
         countQuery = "SELECT COUNT(t) FROM Thread t",
     )
     fun findAllWithChats(pageable: Pageable): Page<Thread>
+
+    @Query("SELECT t FROM Thread t JOIN FETCH t.user WHERE t.createdAt > :cutoff ORDER BY t.createdAt ASC")
+    fun findByCreatedAtAfterWithUser(cutoff: Instant): List<Thread>
 }
