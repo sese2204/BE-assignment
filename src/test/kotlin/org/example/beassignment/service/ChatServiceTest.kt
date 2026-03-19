@@ -6,6 +6,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.example.beassignment.client.AiChatClient
+import org.example.beassignment.client.ContextRetriever
 import org.example.beassignment.common.BusinessException
 import org.example.beassignment.common.ErrorCode
 import org.example.beassignment.dto.ChatRequest
@@ -23,6 +24,7 @@ import java.util.Optional
 class ChatServiceTest {
 
     private val aiChatClient = mockk<AiChatClient>()
+    private val contextRetriever = mockk<ContextRetriever>()
     private val threadService = mockk<ThreadService>()
     private val threadRepository = mockk<ThreadRepository>()
     private val chatRepository = mockk<ChatRepository>()
@@ -30,7 +32,7 @@ class ChatServiceTest {
     private val systemPromptBuilder = mockk<SystemPromptBuilder>()
 
     private val chatService = ChatService(
-        aiChatClient, threadService, threadRepository, chatRepository, userRepository, systemPromptBuilder,
+        aiChatClient, contextRetriever, threadService, threadRepository, chatRepository, userRepository, systemPromptBuilder,
     )
 
     private val user = User(id = 1L, email = "test@test.com", passwordHash = "h", name = "Test")
@@ -44,6 +46,7 @@ class ChatServiceTest {
 
         every { userRepository.findById(1L) } returns Optional.of(user)
         every { threadService.resolveActiveThread(user) } returns thread
+        coEvery { contextRetriever.retrieve(any(), any()) } returns emptyList()
         every { systemPromptBuilder.build(any()) } returns "system prompt"
         coEvery { aiChatClient.chat(any(), any()) } returns "AI reply"
         every { chatRepository.save(any()) } returns Chat(

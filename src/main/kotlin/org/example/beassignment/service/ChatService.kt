@@ -1,6 +1,7 @@
 package org.example.beassignment.service
 
 import org.example.beassignment.client.AiChatClient
+import org.example.beassignment.client.ContextRetriever
 import org.example.beassignment.common.BusinessException
 import org.example.beassignment.common.ErrorCode
 import org.example.beassignment.dto.ChatHistoryItem
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ChatService(
     private val aiChatClient: AiChatClient,
+    private val contextRetriever: ContextRetriever,
     private val threadService: ThreadService,
     private val threadRepository: ThreadRepository,
     private val chatRepository: ChatRepository,
@@ -41,10 +43,8 @@ class ChatService(
             )
         } + ConversationMessage(role = "user", content = request.message)
 
-        val systemPrompt = systemPromptBuilder.build()
-        val messages = if (systemPrompt.isNotBlank()) history else history
-
-        val reply = aiChatClient.chat(messages)
+        val contextChunks = contextRetriever.retrieve(request.message)
+        val reply = aiChatClient.chat(history, contextChunks)
 
         val chat = chatRepository.save(
             Chat(thread = thread, question = request.message, answer = reply),
