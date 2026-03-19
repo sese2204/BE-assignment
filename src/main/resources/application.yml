@@ -24,6 +24,10 @@ ai:
   read-timeout-ms: ${AI_READ_TIMEOUT_MS:60000}
   max-retries: ${AI_MAX_RETRIES:3}
 
+jwt:
+  secret: ${JWT_SECRET:dev-secret-key-please-replace-in-production-min32}
+  expiry-ms: ${JWT_EXPIRY_MS:86400000}
+
 management:
   endpoints:
     web:

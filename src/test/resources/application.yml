@@ -10,6 +10,10 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: false
 
+jwt:
+  secret: test-secret-key-that-is-at-least-256-bits-long-for-hmac-sha
+  expiry-ms: 3600000
+
 ai:
   api-key: test-dummy-key
   base-url: http://localhost
